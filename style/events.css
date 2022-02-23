@@ -1,0 +1,111 @@
+:root {
+    --btn-section-height: 3rem;
+    /* set this var to determine how many sections will be in the */
+    --sections-amount: 4;
+    /* ////////////// */
+    --block-width-events: 17rem;
+}
+
+.events {
+    position: fixed;
+    right: 1.7rem;
+    width: var(--block-width-events);
+    padding: 0;
+    border: var(--clr-gold) 2px solid;
+    display: none;
+    z-index: 9;
+}
+
+.events h3 {
+    text-align: center;
+    margin: 0;
+    border-bottom: 5px double var(--clr-black);
+}
+
+.events h4 {
+    text-align: center;
+    margin: 0;
+}
+
+.events ul {
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    height: 12rem;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    display: none;
+    scroll-snap-type: y mandatory;
+    height: calc(var(--btn-section-height) * var(--sections-amount));
+}
+
+.events ul::-webkit-scrollbar {
+    display: none;
+}
+
+.events li {
+    border: 1px solid black;
+    /* width: 90%; */
+    /*border-radius: var(--small-radius);
+    margin: auto; */
+    display: grid;
+    place-items: center;
+    /* margin-top: 5px; */
+    padding: 5px 0;
+    height: var(--btn-section-height);
+    filter: brightness(75%);
+    /* scroll-snap */
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+}
+
+.events .arrow {
+    height: 1rem;
+    display: grid;
+    place-items: center;
+    background-color: var(--clr-blue);
+    cursor: pointer;
+}
+
+
+/* colors */
+
+.events {
+    background-color: #D6E4BE;
+    background-color: aliceblue;
+    box-shadow: inset 0 0 15px var(--clr-black);
+}
+
+.events h3 {
+    color: var(--clr-gold);
+    background-color: aliceblue;
+    box-shadow: inset 0 0 15px var(--clr-gold-2);
+}
+
+.events h4 {
+    color: var(--clr-black);
+    text-decoration: underline;
+}
+
+.events .event-date {
+    color: var(--clr-black);
+    font-size: small;
+}
+
+.pink {
+    text-shadow: 0 0 5px pink;
+}
+
+.yellow {
+    text-shadow: 0 0 5px yellow;
+}
+
+.grey {
+    text-shadow: 0 0 5px grey;
+}
+
+
+/* events modal */
+
+.events-modal {}

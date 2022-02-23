@@ -1,0 +1,136 @@
+.print {
+    position: fixed;
+    top: 5rem;
+    left: 2rem;
+    display: none;
+    cursor: pointer;
+}
+
+.print i {
+    font-size: 3rem;
+    color: white;
+}
+
+nav {
+    z-index: 10;
+    position: sticky;
+    top: 0;
+    width: 98vw;
+    display: flex;
+    background-color: aliceblue;
+    margin: auto;
+    border-radius: var(--radius);
+    padding: 0 2rem;
+    justify-content: space-between;
+    box-shadow: var(--white-shadow);
+    height: 3.5rem;
+}
+
+.logo {
+    font-size: 3rem;
+    color: var(--clr-gold);
+    margin: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+/*! .logo a {
+    color: inherit;
+} */
+
+.nav-btns,
+.events-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-btn {
+    text-transform: capitalize;
+    border: none;
+    background: transparent;
+    font-family: var(--ff-base);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: var(--text-spacing);
+    padding: 5px 10px;
+    cursor: pointer;
+    /* pointer-events: painted; */
+}
+
+.nav-btn:hover {
+    border-bottom: var(--clr-blue) 2px solid;
+}
+
+.nav-btn:active {
+    border-bottom: var(--clr-blue) 2px solid;
+    color: var(--clr-gold);
+}
+
+.events-btns .nav-btn:hover {
+    background-color: var(--clr-blue);
+    color: var(--clr-gold-2);
+}
+
+.events-btns .nav-btn:active {
+    filter: brightness(85%);
+}
+
+.mobile-nav {
+    display: none;
+}
+
+@media screen and (max-width:900px) {
+    .logo {
+        font-size: 2rem;
+    }
+    nav {
+        width: 100vw;
+        border-radius: 0;
+        height: 2.75rem;
+        padding-right: 0.2rem;
+    }
+    .nav-btns,
+    .events-btns {
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        background-color: aliceblue;
+        min-width: 130px;
+        align-items: stretch;
+        visibility: hidden;
+    }
+    .nav-btn {
+        height: 2.5rem;
+    }
+    .nav-btns {
+        top: 2.75rem;
+        border-top: 1px solid var(--clr-gold);
+    }
+    .events-btns {
+        top: calc(2.75rem + 2.5rem*3);
+    }
+    .events-btns .nav-btn {
+        background-color: var(--clr-blue);
+        color: var(--clr-gold-2);
+        border-top: 1px solid var(--clr-gold);
+    }
+    .events-btns .nav-btn:hover {
+        filter: brightness(85%);
+    }
+    .mobile-nav {
+        display: grid;
+        place-items: center;
+    }
+    i {
+        font-size: 2rem;
+        color: var(--clr-blue);
+    }
+    #up {
+        display: none;
+    }
+}
+
+
+/* //////////////////////////////////////////////////////////// */

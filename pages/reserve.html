@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    /* datepicker */
+    
+    .ui-datepicker {
+        width: auto;
+        height: auto;
+        margin: 0;
+        /* margins fix sliding right */
+        margin-left: -50px;
+        margin-right: -50px;
+        border-radius: var(--radius);
+        font-family: var(--ff-base);
+        font-size: 1.5rem;
+    }
+    
+    .ui-datepicker table {
+        width: 100%;
+    }
+    
+    .ui-datepicker-title {
+        text-align: center;
+        font-size: 15px;
+        height: 2.5rem;
+        /**/
+    }
+    
+    .ui-datepicker-prev {
+        float: left;
+        cursor: pointer;
+        background-position: center -30px;
+        height: 5px;
+        /**/
+    }
+    
+    .ui-datepicker-next {
+        float: right;
+        cursor: pointer;
+        background-position: center 0px;
+        height: 5px;
+        /**/
+    }
+    /*added-start*/
+    
+    .ui-datepicker-prev span {
+        background-image: url(style/icons/arrow-left-solid.svg) !important;
+        background-position: 0px 0px !important;
+    }
+    
+    .ui-datepicker-next span {
+        background-image: url(style/icons/arrow-right-solid.svg) !important;
+        background-position: 0px 0px !important;
+    }
+    
+    .ui-datepicker-year {
+        display: none;
+    }
+    /*added-end*/
+    
+    .ui-datepicker thead {
+        background-color: #f7f7f7;
+        /*border-bottom: 1px solid #bbb;*/
+    }
+    
+    .ui-datepicker th {
+        background-color: #808080;
+        text-transform: uppercase;
+        font-size: 8pt;
+        color: #666;
+    }
+    
+    .ui-datepicker tbody td {
+        padding: 0;
+    }
+    
+    .ui-datepicker tbody td:last-child {
+        border-right: 0px;
+    }
+    
+    .ui-datepicker tbody tr {
+        border-bottom: 1px solid #bbb;
+    }
+    /* numbers */
+    
+    .ui-datepicker td span,
+    .ui-datepicker td a {
+        display: inline-block;
+        width: 20px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: #fff;
+    }
+    /* colors of dates and selections */
+    
+    .ui-datepicker-calendar .ui-state-default {
+        background: linear-gradient(#999, #737373);
+        color: #fff;
+        height: 40px;
+        width: 40px;
+    }
+    
+    .ui-datepicker-calendar .ui-state-hover {
+        background: var(--clr-blue);
+        color: #FFFFFF;
+    }
+    
+    .ui-datepicker-calendar .ui-state-active {
+        background: var(--clr-blue);
+        box-shadow: inset 0px 0px 5px rgba(0, 0, 0, .1);
+        color: #e0e0e0;
+        text-shadow: 0px 1px 0px #4d7a85;
+        border: 1px solid #55838f;
+        position: relative;
+        margin: -1px;
+    }
+    
+    .ui-datepicker-unselectable .ui-state-default {
+        background: #D6E4BE;
+        color: #000;
+    }
+</style>
+<section class="reserve">
+
+    <h2 class="reserve-title">Make a Reservation</h2>
+    <p>To reserve a table in a week or further, plese fill out the form and we will call you back to approve.</p>
+    <p>You can rather call via
+        <a class="caffee-tel" href="tel:123-456-7890">123-456-7890</a> to reserve for today or through the week</p>
+    <form method="post" id="reserve-form" action="processReservation/processReservation.php">
+        <input type="date" name="date" id="date" style="display:none">
+        <div id="date-picker">
+            <button type="button" id="selectDate-btn">Select Date</button>
+
+        </div>
+        <div class="modal form-content">
+            <div class="form-error">
+                An error occurred , please try again later.
+
+            </div>
+            <article id="reserve-container">
+                <button type="button" class="close-btn"></button>
+                <fieldset>
+                    <legend></legend>
+                    <label for="time">Select time :</label>
+                    <span>
+                        <select name="hour" id="hour" required>
+                            <option value="12" selected="selected">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                        </select>
+                        <span>
+                            :
+                        </span>
+                    <!-- <select name="minute" id="minute" required> -->
+                    <select name="minute" id="minute">
+
+                            <option value="00" selected="selected">00</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
+                        </select>
+                    </span>
+                    <label for="name">First and Last name * :</label>
+                    <!-- <input type="text" name="name" id="name" required> -->
+                    <input type="text" name="name" id="name">
+
+                    <label for="phone-number">Phone Number *:</label>
+                    <!-- <input type="tel" name="phone" id="phone" required> -->
+                    <input type="tel" name="phone" id="phone">
+
+                    <label for="email">Email :</label>
+                    <input type="email" name="email" id="email">
+
+                    <label for="guests">How many guests : <span
+                            style="text-decoration: underline; color:var(--clr-blue); " id="guests-num">
+                            2
+                        </span></label>
+                    <div class="range-wrap">
+                        <span>
+                            1
+                        </span>
+                        <input type="range" min="1" max="10" value="2" name="guests" id="guests">
+                        <span>
+                            10
+                        </span>
+                    </div>
+                    <div class="get-updated">
+                        <input type="checkbox" checked="checked" name="subscription" id="subscription" value="subscribe"><label for="subscription">Get
+                            updated
+                            about all our Events!</label>
+                    </div>
+                    <!-- <span style="color:red; text-align: center; " id="unexpected_err">asss</span> -->
+                    <input type="submit" value="Reserve!" id="submit-res-btn">
+                </fieldset>
+            </article>
+            <article id="reserved-container">
+                <div id="reserved-content-block">
+                    <button type="button" class="close-btn"></button>
+
+                    <h3>Thank you for reservation!</h3>
+                    <p>Your table for <span id="reserved-guests">
+
+                        </span> will be ready on <span id="reserved-date">
+
+                        </span> at <span id="reserved-time">
+
+                        </span>.</p>
+                    <p>You will receive sms to your phone number for the upcoming events.</p>
+                    <p>*Clicking on the <span id="reserved-click">Reserved</span> button at the navigation section will show you the active requests.</p>
+                    <p>You may <span style="color:yellow">cancel</span> through the website up to 3 days before the upcoming event, afterwards you need to make a call via <a class="caffee-tel" href="tel:123-456-7890">123-456-7890</a> to update.</p>
+
+                </div>
+            </article>
+        </div>
+
+
+    </form>
+</section>
+
+<script>
+    $(() => {
+
+
+        //////////////////////////////////////////////
+        ////////////////////////////////////////////
+
+        //show selected guests number to the client
+        $("#guests").change(() => {
+            $("#guests-num").html($('#guests').val());
+        });
+        $("#guests").on('input', () => {
+            $("#guests-num").html($('#guests').val());
+
+        })
+
+        // format validation
+
+        //regular expressions for input validations email , israeli phone number
+        const regexEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        const regexPhone = /^05\d([-]{0,1})\d{7}$/;
+        const regexName = /^\b(?!.*?\s{2})[A-Za-z \-]{1,50}\b$/;
+
+
+        //function for format validation
+        function isValidFormat(value, regex) {
+            return regex.test(value);
+        };
+
+        function ifInputErr(input, regex) {
+            if (isValidFormat(input.val(), regex)) {
+                if (input.hasClass('has-error')) {
+                    input.removeClass('has-error');
+                    input.attr('placeholder', "");
+                }
+
+            };
+        };
+
+
+        $('#email').change(() => {
+
+            ifInputErr($(this), regexEmail);
+        });
+        $('#phone').change(() => {
+
+            ifInputErr($(this), regexPhone);
+        });
+        $('#name').change(() => {
+
+            ifInputErr($(this), regexName);
+        });
+        //phone validation
+
+
+        //save content to reset
+        errDivClone = $('.form-error').clone();
+
+        //form processing
+        $("#reserve-form").on("submit", (e) => {
+            //reset errors in error div
+            $('.form-error').replaceWith(errDivClone.clone());
+
+            //remove all errors
+            $('#reserve-container input').removeClass('has-error');
+            $('#reserve-container input').attr('placeholder', '');
+
+
+
+            $.getScript("formScripts/reservationAjax.js", () => {
+                ///get the ajax form submission
+                console.log('loaded ajax');
+            })
+
+
+            e.preventDefault();
+
+
+        });
+
+        ////////////////////////////////////////////////
+        ///////////////////////////////////////////////////
+        //end form processing
+
+        //invoke nav 'reserved' on click of word 'reserved' in verified reservation window
+        $('#reserved-click').click(() => {
+                $('#reserved-btn').click();
+            })
+            /////////////////////////////////////////////////
+
+        //date picker
+        $("#date-picker").datepicker({
+            maxDate: '+3m',
+            minDate: defaultDate(),
+            defaultDate: defaultDate(),
+            beforeShowDay: function(date) {
+                var day = date.getDay();
+                return [(day != 6), ''];
+            },
+
+        });
+
+        function defaultDate() {
+            var d = new Date();
+            let day = d.getDay();
+
+            if (day == 6) {
+                return '+8d';
+            } else {
+                return '+7d';
+            }
+
+        }
+
+
+
+
+        let height = function setHeight() {
+            let height = 0;
+            $("#date-picker").datepicker();
+
+            $('.reserve , nav').each(() => {
+                height += $(this).height();
+            })
+
+            height = height + "px";
+            return height;
+        };
+        if ($('#date-picker').css('position') == 'absolute') {
+
+            $('#date-picker').css('top', height());
+        }
+
+
+        $('#selectDate-btn').click(() => {
+
+            //get datepicker value
+            var datepickerVal = $("#date-picker").val();
+
+            date = new Date(datepickerVal);
+
+
+            //set correct format to input
+            var day = ("0" + date.getDate()).slice(-2);
+            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+            var year = date.getFullYear();
+
+            var selectedDate = year + "-" + (month) + "-" + (day);
+
+
+            //set date to input
+            $("#date").val(selectedDate);
+
+
+
+            //modify month format
+
+            var mo = new Intl.DateTimeFormat('en', {
+                month: 'short'
+            }).format(date);
+
+
+
+            let prettyDate = day + " " + mo + " , " + year;
+
+
+            //put date in legend
+            $('legend').html(prettyDate);
+
+            //show modal
+            $('.form-content').show().css('display', 'grid');
+
+            //hide datepicker
+            $("#date-picker").hide();
+
+        })
+
+
+
+        /////////////////////////////////////////
+        // close form Modal btn 
+        $('.close-btn').click(() => {
+            //close form modal
+            $('.form-content').hide();
+
+            //show datepicker
+            $("#date-picker").show();
+
+            //switch to display for if reservation was made
+            $('#reserve-container').css('display', 'block');
+            $('#reserved-container').css('display', 'none');
+
+            //hide error if occurred
+            $(".form-error").hide();
+
+
+        })
+    });
+</script>
+
+</html>

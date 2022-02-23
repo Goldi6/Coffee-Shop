@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Roman&family=Roboto:wght@300&family=The+Nautigal:wght@700&display=swap');
+:root {
+    --ff-roboto: 'Roboto', sans-serif;
+    --ff-base: 'Luxurious Roman', cursive;
+    --ff-header: 'The Nautigal', cursive;
+    --radius: 0.875rem;
+    --small-radius: 5px;
+    --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    --white-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    --clr-black: #222;
+    --clr-white: rgb(221, 221, 221);
+    --text-spacing: 0.1rem;
+    --clr-gold: rgb(109, 95, 19);
+    --clr-gold-2: rgb(218, 211, 173);
+    --clr-blue: rgb(56, 139, 207);
+    --transition: all 0.2s;
+}
+
+
+/* remove animations for people who've turned them off */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::after,
+    *::before {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+button,
+input {
+    border: none;
+}
+
+.caffee-tel {
+    cursor: pointer;
+}
+
+*,
+:before,
+:after {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    background-color: var(--clr-black);
+    font-size: 1.05rem;
+    font-family: var(--ff-base);
+    letter-spacing: var(--text-spacing);
+}
+
+html,
+body {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-x: hidden;
+}
+
+.wrapper {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+li {
+    list-style: none;
+    cursor: pointer;
+}
+
+.wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+main {
+    display: grid;
+    width: 70vw;
+    margin: auto;
+    justify-items: center;
+    align-items: start;
+    padding-bottom: 6rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    /* Height of the footer */
+}
+
+
+/* set height for the footer!!! footer height */
+
+
+/* #menu {
+    height: auto;
+    margin-bottom: 3rem;
+}
+
+#about {
+    height: 100vh;
+}
+
+#reserve {
+    height: '';
+    min-height: 100vh;
+    margin-bottom: 5rem;
+} */
+
+
+/* fix footer */
+
+@media screen and (max-width:600px) {
+    #reserve {}
+}
+
+h1,
+h2,
+h3,
+h4 {
+    text-transform: capitalize;
+    font-family: var(--ff-header);
+    text-align: center;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3rem;
+}
+
+h3 {
+    font-size: 2.5rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+p {
+    color: var(--clr-white);
+    text-align: center;
+}
+
+p:first-of-type:first-letter {
+    font-size: 3rem;
+}
+
+@media screen and (max-width:600px) {
+    .main {
+        /* width: 100vw; */
+        /* padding: 0;
+        margin: 0; */
+    }
+}
+
+@media screen and (min-width:600px) and (max-width:900px) {
+    .main {
+        width: 80vw;
+    }
+}
