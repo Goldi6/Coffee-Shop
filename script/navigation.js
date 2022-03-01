@@ -29,7 +29,7 @@ $(function() {
             page = folder + "video.html";
             $("main").addClass("full");
             $("main").attr("id", "full");
-            $(".reserved-nav , .events").hide();
+            $(".reserved-nav , .events-wrap").hide();
             $("#events-list").slideUp();
         }
         $("main").load(page);

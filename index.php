@@ -28,6 +28,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
+
+    <!-- slick carousel -->
+    <link rel="stylesheet" type="text/css" href="slick-1.8.1/slick/slick.css" />
+    <!--// Add the new slick-theme.css if you want the default styling -->
+    <link rel="stylesheet" type="text/css" href="slick-1.8.1/slick/slick-theme.css" />
+    <script type="text/javascript" src="slick-1.8.1/slick/slick.min.js"></script>
+    <!--      -->
+
     <script src="script/filterPlugin.js"></script>
 </head>
 
@@ -43,9 +51,11 @@
         </main>
         <?php include 'pages/footer.php'; ?>
     </div>
+
+    <script src="script/loadEvents.js"></script>
     <script src="script/navigation.js"></script>
     <script src="script/mobile-nav.js"></script>
-    <script src="script/reserved-nav.js"></script>
+    <script src="script/nav-open_close-SideBars.js"></script>
     <script src="script/reserved-li-script.js"></script>
     <script src="script/loadReserved.js"></script>
     <script src=" script/events.js">
@@ -53,6 +63,7 @@
     <script src="script/searchForm.js"></script>
 
     <script src="script/touch-screen.js"></script>
+
 
 </body>
 

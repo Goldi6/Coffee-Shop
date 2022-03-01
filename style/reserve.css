@@ -238,6 +238,26 @@
      color: rgba(255, 255, 0, 0.5);
      opacity: 0.8;
  }
+ /* reserve msg error */
+ 
+ h3.error,
+ p.error {
+     display: none;
+ }
+ 
+ #reserved-content-block.error .error {
+     display: block;
+ }
+ 
+ #reserved-content-block.error p:first-of-type {
+     display: none;
+ }
+ 
+ #reserved-content-block.error h3:first-of-type {
+     display: none;
+ }
+ /* ////////////////////////////////////////////////// */
+ /* /////////////////////////////////////////// */
  /* form submitted msg */
  
  article#reserved-container {

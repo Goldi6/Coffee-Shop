@@ -1,38 +1,80 @@
 $(function() {
-    // open/close events bar
-    $("#events-btn").click(() => {
-        if ($(".reserved-nav").is(":visible")) {
-            $(".reserved-nav").animate({
-                    width: "toggle",
-                },
-                200
-            );
+    //////////////////////////////////////////////////////////////
+    //how many li items are shown
+
+    //count how many shown li's are in the events sect
+    const btnSectionsAmount = () => {
+        const cssVar_Amount = getComputedStyle(
+            document.documentElement
+        ).getPropertyValue("--sections-amount");
+        return Number(cssVar_Amount);
+    };
+
+    //get li item offset height
+    var $height = $("#events-list li").outerHeight(true);
+
+    ///////
+
+    //NOTE:close /open events list items
+    //#region Slide on big arrow
+    var open = false;
+    $(".big-arrow").click(() => {
+        if ($(".big-arrow").hasClass("closed")) {
+            //$("#events-list").slideDown();//!flickers
+
+            slideDownCustom("#events-list");
+
+            $(".arrow").css("cursor", "pointer");
+            $(".big-arrow").removeClass("closed");
+
+            open = true;
+        } else {
+            $("#events-list").slideUp();
+            $(".arrow").css("cursor", "default");
+            $(".big-arrow").addClass("closed");
+            open = false;
         }
-        $(".events").fadeToggle("slow");
-        $("#events-list").slideToggle();
     });
+
+    //replacing the slideDown()
+    function slideDownCustom(el) {
+        //get height of the items menu
+        const ulHeight = () => {
+            return $height * btnSectionsAmount();
+        };
+
+        var $elem = $(el);
+        let h = ulHeight() + "px";
+        console.log(h);
+
+        $elem.css({ height: 0, display: "block" });
+
+        $elem.animate({
+                height: h,
+            },
+            1000
+        );
+    }
+    //#endregion
+
     //////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////
-    // scroll events
+    //COMPLETE: scroll events
+    //#region scrolling and next\prev
 
-    //get item offset height and count list items minus (4) visible items
-    var $height = $("#events-list li").outerHeight(true);
+    // count list items minus  visible items
     var listItemsNum = $("#events-list li").length;
 
     let preventScrollingFire = false;
 
-    //////////////////////////////////////////////////////////////
+    //////////////////////////////
 
-    var btnSectionsAmount = getComputedStyle(
-        document.documentElement
-    ).getPropertyValue("--sections-amount");
-
-    var btnSectionsAmount = Number(btnSectionsAmount);
-    ///////
+    //arrows and scrolling functions for ul section
+    ////////
     function down() {
-        if (nDown < listItemsNum - 4) {
+        if (nDown < listItemsNum - btnSectionsAmount()) {
             nDown++;
             $("#events-list").animate({
                     scrollTop: $height * nDown,
@@ -162,4 +204,6 @@ $(function() {
         }
         return event.deltaY < 0;
     }
+
+    //#endregion
 });

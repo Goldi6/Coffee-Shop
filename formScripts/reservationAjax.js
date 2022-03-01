@@ -20,12 +20,13 @@ var formData = {
 
 $.ajax({
         type: "post",
-        url: "processReservation/processReservation.php",
+        url: "backend/processReservation/processReservation.php",
         data: formData,
         dataType: "json",
         encode: "true",
         beforeSubmit: function() {
             //check local storage for count
+            //NEEDED?
         },
     })
     .done(function(data) {
@@ -105,24 +106,12 @@ $.ajax({
                     //alert(inserted);
                     //if space full add an error to the ready reservation msg block
                     if (!inserted) {
-                        $("#reserved-container").addClass("error");
+                        $("#reserved-content-block").addClass("error");
                     }
                 }).then(function() {
-                    if ($("#reserved-container").hasClass("error")) {
-                        //if localStorage is full and reservation is not accepted
-                        $("#reserved-container p")
-                            .first()
-                            .text(
-                                "You already have some reservations made through the website, please call us for help or if you heed any more."
-                            );
+                    if (!$("#reserved-content-block").hasClass("error")) {
+                        //if reservation made get it from local storage and add to the reserver menu;
 
-                        $("#reserved-content-block h3")
-                            .text("Sorry! That's to much")
-                            .css("color", "red");
-                    } else {
-                        //if reservation made get it from local storage and add to the reserver menue;
-                        //?needed?
-                        //!
                         $.getScript("formScripts/localStorage-out.js", () => {
                             console.log("out loaded!");
                             let items = getLocalStorageToNav(tableKeys);
@@ -134,6 +123,7 @@ $.ajax({
 
                             //console.log(idKey);
                             //place reservation items in the reservations menu in thr nav bar!!
+                            //LINK : this func returns ready html element from: 'reserved-li-script.js'
                             let element = ResLiElement(
                                 storageObject.num,
                                 storageObject.guests,

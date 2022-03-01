@@ -26,9 +26,6 @@ function ResLiElement(num, guests, date, hour, minute) {
     return `<li id="${num}"><button class="clear-btn-li" onclick="clearLi(${num})"></button><button class="cancel-btn-li"></button><span class="relative li-tooltip-container"><span class="tooltip cancel-res-tooltip"></span></span><p class="guests-invited">Table for:${guests}</p><p class="guest-time">${date} at ${hour}:${minute}</p></li>`;
 }
 //TODO: open another block to view full details
-// $(".reserved-nav ul").on("click", "li", function() {
-//     alert("gu");
-// });
 
 ///////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
@@ -63,8 +60,10 @@ $("#delete-All-reservations-btn").click(() => {
 });
 
 function deletedAllResLis() {
+    $(".reserved-nav").hide().attr("id", "start-nav");
+
     $("#search-reservations").show();
     $("#delete-All-reservations-btn").hide();
     $("#reservation-delete-tooltip").show();
-    $(".reserved-nav").hide();
+    //$(".reserved-nav").hide();
 }

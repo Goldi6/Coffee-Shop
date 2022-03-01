@@ -7,13 +7,8 @@
 }
 
 .events {
-    position: fixed;
-    right: 1.7rem;
-    width: var(--block-width-events);
-    padding: 0;
     border: var(--clr-gold) 2px solid;
-    display: none;
-    z-index: 9;
+    padding: 0;
 }
 
 .events h3 {
@@ -109,3 +104,55 @@
 /* events modal */
 
 .events-modal {}
+
+
+/* ////////////////////////////*/
+
+
+/* bigarrow */
+
+
+/* ///////////////////////// */
+
+.big-arrow::after,
+.big-arrow::before {
+    content: '';
+    border-top: 10px solid #555;
+    width: 3rem;
+    position: absolute;
+    border-radius: 5px;
+    z-index: 0;
+    background-color: #333;
+    cursor: pointer;
+    bottom: 0;
+}
+
+.big-arrow:after {
+    transform: rotate(45deg);
+    right: 46%;
+}
+
+.big-arrow:before {
+    transform: rotate(-45deg);
+    left: 46%;
+}
+
+.big-arrow {
+    padding: 0;
+    margin: auto;
+    cursor: pointer;
+    width: 20%;
+    background-color: #333;
+    height: 1.5rem;
+    z-index: -6;
+    border-radius: 0 0 50px 50px;
+}
+
+.events-wrap {
+    position: fixed;
+    right: 1.7rem;
+    width: var(--block-width-events);
+    z-index: 9;
+    /* display: none; */
+    opacity: 0;
+}

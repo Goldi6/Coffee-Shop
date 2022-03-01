@@ -203,6 +203,7 @@
                     <button type="button" class="close-btn"></button>
 
                     <h3>Thank you for reservation!</h3>
+                    <h3 class="error" style="color: red;">Sorry! That's to much</h3>
                     <p>Your table for <span id="reserved-guests">
 
                         </span> will be ready on <span id="reserved-date">
@@ -210,6 +211,7 @@
                         </span> at <span id="reserved-time">
 
                         </span>.</p>
+                    <p class="error">You already have some reservations made through the website, please call us for help or if you heed any more.</p>
                     <p>You will receive sms to your phone number for the upcoming events.</p>
                     <p>*Clicking on the <span id="reserved-click">Reserved</span> button at the navigation section will show you the active requests.</p>
                     <p>You may <span style="color:yellow">cancel</span> through the website up to 3 days before the upcoming event, afterwards you need to make a call via <a class="caffee-tel" href="tel:123-456-7890">123-456-7890</a> to update.</p>
@@ -225,10 +227,8 @@
 <script>
     $(() => {
 
-
         //////////////////////////////////////////////
         ////////////////////////////////////////////
-
         //show selected guests number to the client
         $("#guests").change(() => {
             $("#guests-num").html($('#guests').val());
@@ -241,43 +241,57 @@
         // format validation
 
         //regular expressions for input validations email , israeli phone number
-        const regexEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        const regexPhone = /^05\d([-]{0,1})\d{7}$/;
-        const regexName = /^\b(?!.*?\s{2})[A-Za-z \-]{1,50}\b$/;
+        const regexEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
+            regexPhone = /^05\d([-]{0,1})\d{7}$/,
+            regexName = /^\b(?!.*?\s{2})[A-Za-z \-]{1,50}\b$/;
 
 
-        //function for format validation
-        function isValidFormat(value, regex) {
-            return regex.test(value);
+
+        let isValidFormat = (value, regex) => regex.test(value);
+
+
+        function ifInputErr(input) {
+
+            if (input.classList.contains('has-error')) {
+                input.classList.remove('has-error');
+                input.placeholder = '';
+            }
+
+
         };
 
-        function ifInputErr(input, regex) {
-            if (isValidFormat(input.val(), regex)) {
-                if (input.hasClass('has-error')) {
-                    input.removeClass('has-error');
-                    input.attr('placeholder', "");
-                }
 
+
+
+        let nameField = document.getElementById('name');
+        let phoneField = document.getElementById('phone');
+        let emailField = document.getElementById('email');
+
+
+
+        nameField.addEventListener('change', (e) => {
+            let current = e.currentTarget;
+            if (isValidFormat(current.value, regexName)) {
+                ifInputErr(current);
             };
-        };
-
-
-        $('#email').change(() => {
-
-            ifInputErr($(this), regexEmail);
         });
-        $('#phone').change(() => {
-
-            ifInputErr($(this), regexPhone);
+        phoneField.addEventListener('change', (e) => {
+            let current = e.currentTarget;
+            if (isValidFormat(current.value, regexPhone)) {
+                ifInputErr(current);
+            };
         });
-        $('#name').change(() => {
-
-            ifInputErr($(this), regexName);
+        emailField.addEventListener('change', (e) => {
+            let current = e.currentTarget;
+            if (isValidFormat(current.value, regexEmail)) {
+                ifInputErr(current);
+            };
         });
-        //phone validation
 
+        //////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////
 
-        //save content to reset
+        //save content to reset the form (without errors)
         errDivClone = $('.form-error').clone();
 
         //form processing
@@ -288,13 +302,35 @@
             //remove all errors
             $('#reserve-container input').removeClass('has-error');
             $('#reserve-container input').attr('placeholder', '');
+            ////////////////////////////////////////////////////////////////////////////////
+            //FIXME: 
+            let check = [{
+                result: isValidFormat($('#email').val(), regexEmail),
+                for: "#email"
+            }, {
+                result: isValidFormat($('#phone').val(), regexPhone),
+                for: "#phone"
+            }, {
+                result: isValidFormat($('#name').val(), regexName),
+                for: "#name"
+            }];
 
+            //NOTE: checks regex before sending form
+            if (((check.every(v => v.result == true)) && $('#email').val()) || (!$('#email').val() &&
+                    check[1] && check[2] && !$('#subscription').is('checked'))) {
+                $.getScript("formScripts/reservationAjax.js", () => {
+                    ///get the ajax form submission
+                    console.log('loaded ajax');
+                })
+            } else {
+                check.forEach(element => {
+                    if (element.result === false) {
+                        let id = element.for;
+                        $(id).addClass('has-error');
+                    }
+                });
+            }
 
-
-            $.getScript("formScripts/reservationAjax.js", () => {
-                ///get the ajax form submission
-                console.log('loaded ajax');
-            })
 
 
             e.preventDefault();
@@ -304,7 +340,6 @@
 
         ////////////////////////////////////////////////
         ///////////////////////////////////////////////////
-        //end form processing
 
         //invoke nav 'reserved' on click of word 'reserved' in verified reservation window
         $('#reserved-click').click(() => {
@@ -312,6 +347,33 @@
             })
             /////////////////////////////////////////////////
 
+
+
+        /////////////////////////////////////////
+        // close form Modal btn 
+        $('.close-btn').click(() => {
+            //close form modal
+            $('.form-content').hide();
+
+            //show datepicker
+            $("#date-picker").show();
+
+            //switch to display for if reservation was made
+            $('#reserve-container').css('display', 'block');
+            $('#reserved-container').css('display', 'none');
+
+            //hide error if occurred
+            $(".form-error").hide();
+            //remove 'too many reservations error'
+            $("#reserved-content-block").removeClass("error");
+
+
+        })
+
+        // ////////////////////////////////////////////////////
+        //////////////////////////////////////////
+
+        //NOTE:DATEPICKER
         //date picker
         $("#date-picker").datepicker({
             maxDate: '+3m',
@@ -401,24 +463,8 @@
 
 
 
-        /////////////////////////////////////////
-        // close form Modal btn 
-        $('.close-btn').click(() => {
-            //close form modal
-            $('.form-content').hide();
-
-            //show datepicker
-            $("#date-picker").show();
-
-            //switch to display for if reservation was made
-            $('#reserve-container').css('display', 'block');
-            $('#reserved-container').css('display', 'none');
-
-            //hide error if occurred
-            $(".form-error").hide();
 
 
-        })
     });
 </script>
 

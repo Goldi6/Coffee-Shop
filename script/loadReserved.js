@@ -40,6 +40,7 @@ $(document).ready(function() {
 
                     //load all saved reservations in the menu
                     let htmlCont = ReservedData.map((data) => {
+                        //LINK : this func returns ready html element from:'reserved-li-script.js'
                         return ResLiElement(
                             data.num,
                             data.guests,
@@ -62,11 +63,11 @@ $(document).ready(function() {
         //this function creates the possible keys
     });
 });
-
+//LINK
 function testExpired() {
     //those values have  objects of {key:key('table1...') , cont:json string} with unparsed object off all stored values in the local storage obj}
     //?from 'reserved-li-script.js'
-    var values = getTableKeysAndValues_localStorage();
+    var values = getTableKeysAndValues_localStorage(); //LINK: 'global.js'
     let idsRemove = [];
 
     // console.log(values);
@@ -74,8 +75,6 @@ function testExpired() {
     //check for this website local storage
     values.forEach((val) => {
         let key = val.key;
-        // ! if (key.includes("table")) { //no need for that (there is a function to get all tables)
-        //   console.log(key);
 
         //parse to js objects
         let items = JSON.parse(val.cont);
@@ -99,7 +98,6 @@ function testExpired() {
             localStorage.removeItem(key);
             idsRemove.push(id);
         }
-        // ! }
     });
 
     return idsRemove;

@@ -45,76 +45,24 @@
             browser</span>
     </span>
 </div>
-<!--TODO: FETCH EVENTS -->
 <!-- events -->
-<aside class="events">
-    <span class="arrow" id="events-up-arrow">
-        <i class="fas fa-caret-up"></i>
-    </span>
-    <h3>Events</h3>
-    <ul id="events-list">
-        <li>
-            <h4 class="event-name ">Music Event</h4><span class="event-date">1.1.2022</span>
-        </li>
-        <li>
-            <h4 class="event-name yellow">Art Gallery</h4><span class="event-date">
-                23.1.2022
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name pink">Happy Valentines</h4>
-            <span class="event-date">
-                14.2.20022
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name grey">Every Sunday</h4>
-            <span class="event-date">
-                after 6pm
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name ">Anniversary!</h4>
-            <span class="event-date">
-                24.5.2022
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name">Ipsum</h4>
-            <span class="event-date">
-                2.2.2222
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name">Lorem</h4>
-            <span class="event-date">
-                1.1.1111
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name ">Happy Birthday</h4>
-            <span class="event-date">
-                7.8.2022
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name">Another</h4>
-            <span class="event-date">
-                3.3.3333
-            </span>
-        </li>
-        <li>
-            <h4 class="event-name">Holidays</h4>
-            <span class="event-date">
-                6.6.6666
-            </span>
-        </li>
-    </ul>
-    <span class="arrow" id="events-down-arrow">
-        <i class="fas fa-caret-down"></i>
-    </span>
+<div class="events-wrap closed">
+    <aside class="events">
+        <span class="arrow" id="events-up-arrow">
+            <i class="fas fa-caret-up"></i>
+        </span>
+        <h3>Events</h3>
+        <ul id="events-list">
 
-</aside>
+        </ul>
+        <span class="arrow" id="events-down-arrow">
+            <i class="fas fa-caret-down"></i>
+        </span>
+
+    </aside>
+    <div class="big-arrow closed">
+    </div>
+</div>
 <!-- events container -->
 
 <section class="events-modal">
@@ -132,7 +80,7 @@ function clickLinkToReserve() {
     let btn = document.querySelector('#reserve-btn');
     btn.click();
 }
-//!fix this {  printInfo(this) }
+//FIXME:  {  printInfo(this) }
 function printInfo(ele) {
     var openWindow = window.open("", "title", "attributes");
     openWindow.document.write(ele.nextSibling.childNode.innerHTML);
