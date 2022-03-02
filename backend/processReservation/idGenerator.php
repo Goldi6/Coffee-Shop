@@ -1,5 +1,7 @@
 <?php
 
+//NOTE: id length: 43
+
 //add zero if day or month are single number
 function doubleNum($num)
 {

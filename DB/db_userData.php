@@ -2,4 +2,6 @@
 $serverName = "localhost";
 $username = "root";
 $password = "";
-$DBname = "ArtCoffeeShop";
+$DBname = "Caf`e";
+$reservationsTableName = "Reservations";
+$clientsTableName = "Subscribers";
