@@ -64,12 +64,13 @@
     </div>
 </div>
 <!-- events container -->
-
-<section class="events-modal">
+<!-- NEEDED? -->
+<!-- <section class="events-modal">
     <div class="events-container">
 
     </div>
-</section>
+</section> -->
+<?php include 'carousel-modal.html'; ?>
 
 <!-- print button -->
 <span class="print" onclick="window.print();return false">

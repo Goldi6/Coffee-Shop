@@ -45,3 +45,7 @@ function outputGuests(bookedGuests) {
         $("article#reserved-container").fadeIn();
     });
 }
+
+function outputEvent(bookedEvent) {
+    $("#reserved-event").html(bookedEvent);
+}

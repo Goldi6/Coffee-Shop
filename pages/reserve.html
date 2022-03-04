@@ -122,9 +122,9 @@
     }
 </style>
 <section class="reserve">
-
+    <!-- #region reservation page content -->
     <h2 class="reserve-title">Make a Reservation</h2>
-    <p>To reserve a table in a week or further, plese fill out the form and we will call you back to approve.</p>
+    <p>To reserve a table in <span class="min-days"></span> from now or further, plese fill out the form and we will call you back to approve.</p>
     <p>You can rather call via
         <a class="caffee-tel" href="tel:123-456-7890">123-456-7890</a> to reserve for today or through the week</p>
     <form method="post" id="reserve-form" action="processReservation/processReservation.php">
@@ -133,15 +133,22 @@
             <button type="button" id="selectDate-btn">Select Date</button>
 
         </div>
+
+        <!-- #endregion -->
         <div class="modal form-content">
             <div class="form-error">
                 An error occurred , please try again later.
 
             </div>
-            <article id="reserve-container">
+            <!-- #region reservation Form -->
+            <article id="reserve-container" class="reCont modal-child">
                 <button type="button" class="close-btn"></button>
                 <fieldset>
                     <legend></legend>
+                    <!-- added! -->
+                    <input type="text" style="display: none;" id="event">
+                    <input type="text" style="display: none;" id="eventId">
+
                     <label for="time">Select time :</label>
                     <span>
                         <select name="hour" id="hour" required>
@@ -197,11 +204,14 @@
                     <!-- <span style="color:red; text-align: center; " id="unexpected_err">asss</span> -->
                     <input type="submit" value="Reserve!" id="submit-res-btn">
                 </fieldset>
+                <!-- #endregion -->
             </article>
-            <article id="reserved-container">
-                <div id="reserved-content-block">
+            <article id="reserved-container" class="modal-child">
+                <div id="reserved-content-block" class="reCont">
                     <button type="button" class="close-btn"></button>
-
+                    <span id="reserved-event">
+                        Anniversary
+                    </span>
                     <h3>Thank you for reservation!</h3>
                     <h3 class="error" style="color: red;">Sorry! That's to much</h3>
                     <p>Your table for <span id="reserved-guests">
@@ -226,7 +236,7 @@
 
 <script>
     $(() => {
-
+        $('.min-days').text(MIN_DAYS);
         //////////////////////////////////////////////
         ////////////////////////////////////////////
         //show selected guests number to the client
@@ -297,6 +307,7 @@
         //form processing
         $("#reserve-form").on("submit", (e) => {
             //reset errors in error div
+            console.log($('#event').val());
             $('.form-error').replaceWith(errDivClone.clone());
 
             //remove all errors
@@ -351,49 +362,59 @@
 
         /////////////////////////////////////////
         // close form Modal btn 
-        $('.close-btn').click(() => {
+        $('.reCont > .close-btn').click(() => {
+
+
+                //show datepicker
+                $("#date-picker").show();
+
+                //switch to display for if reservation was made
+                $('#reserve-container').css('display', 'block');
+                $('#reserved-container').css('display', 'none');
+
+                //hide error if occurred
+                $(".form-error").hide();
+                //remove 'too many reservations error'
+                $("#reserved-content-block").removeClass("error");
+
+
+            })
+            //CLOSE MODALS
+        $(".close-btn").click(() => {
             //close form modal
-            $('.form-content').hide();
+            $(".modal").hide();
+        });
 
-            //show datepicker
-            $("#date-picker").show();
-
-            //switch to display for if reservation was made
-            $('#reserve-container').css('display', 'block');
-            $('#reserved-container').css('display', 'none');
-
-            //hide error if occurred
-            $(".form-error").hide();
-            //remove 'too many reservations error'
-            $("#reserved-content-block").removeClass("error");
-
-
-        })
 
         // ////////////////////////////////////////////////////
         //////////////////////////////////////////
 
         //NOTE:DATEPICKER
+
         //date picker
         $("#date-picker").datepicker({
             maxDate: '+3m',
             minDate: defaultDate(),
             defaultDate: defaultDate(),
+            //exclude sunday
             beforeShowDay: function(date) {
                 var day = date.getDay();
                 return [(day != 6), ''];
             },
 
         });
+        //console.log(MIN_DAYS);
 
         function defaultDate() {
             var d = new Date();
             let day = d.getDay();
 
-            if (day == 6) {
-                return '+8d';
+            //TODO: calc the day to align with the end of week if MINDAY changes
+
+            if (day == 3) {
+                return '+' + (MIN_DAYS + 1) + 'd';
             } else {
-                return '+7d';
+                return '+' + MIN_DAYS + 'd';
             }
 
         }

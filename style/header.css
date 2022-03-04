@@ -50,7 +50,7 @@ nav {
     text-transform: capitalize;
     border: none;
     background: transparent;
-    font-family: var(--ff-base);
+    /* font-family: var(--ff-base); */
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: var(--text-spacing);

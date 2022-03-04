@@ -1,7 +1,7 @@
 /////////////////////////////////////
 function insertToLocalStorage(data, keys) {
     // let keys = ["table1", "table2", "table3", "table4", "table5", "table6"];
-    // console.log("arrrr" + keys);
+
     exist = keys.map((key, index) => {
         if (window.localStorage.getItem(key) !== null) {
             return ([index] = key);
@@ -37,6 +37,8 @@ function insertToLocalStorage(data, keys) {
             minute: data.minute,
             num: data.id,
             suffix: suffix,
+            event: data.event,
+            eventId: data.eventId,
         };
 
         let value = JSON.stringify(values);

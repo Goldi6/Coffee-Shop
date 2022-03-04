@@ -46,7 +46,9 @@ $(document).ready(function() {
                             data.guests,
                             data.date,
                             data.hour,
-                            data.minute
+                            data.minute,
+                            data.event,
+                            data.eventId
                         );
                     });
                     // alert(htmlCont);

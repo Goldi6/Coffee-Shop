@@ -22,8 +22,8 @@ function clearLi(id) {
 
 //TODO: cancel reservation function -> bind to the '.cancel-btn-li'
 //upload li element (reservation nav)  //used in 'loadReserved.js' and 'reservationAjax.js'
-function ResLiElement(num, guests, date, hour, minute) {
-    return `<li id="${num}"><button class="clear-btn-li" onclick="clearLi(${num})"></button><button class="cancel-btn-li"></button><span class="relative li-tooltip-container"><span class="tooltip cancel-res-tooltip"></span></span><p class="guests-invited">Table for:${guests}</p><p class="guest-time">${date} at ${hour}:${minute}</p></li>`;
+function ResLiElement(num, guests, date, hour, minute, event, eventId) {
+    return `<li data-eventId="${eventId}" id="${num}"><button class="clear-btn-li" onclick="clearLi(${num})"></button><button class="cancel-btn-li"></button><span class="relative li-tooltip-container"><span class="tooltip cancel-res-tooltip"></span></span><p class="event-li-output">${event}</p><p class="guests-invited">Table for:${guests}</p><p class="guest-time">${date} at ${hour}:${minute}</p></li>`;
 }
 //TODO: open another block to view full details
 

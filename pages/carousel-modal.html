@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+
+<div class="modal" id="events-modal-wrap">
+
+    <section class="events-modal modal-child">
+        <button class=" close-btn"></button>
+        <h2>Closest Events</h2>
+        <hr>
+
+
+        <div class="events-modal-content slik-carousel">
+
+        </div>
+
+
+
+    </section>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.slik-carousel').slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerMode: true,
+            adaptiveHeight: false,
+            variableWidth: true,
+
+        });
+    });
+</script>

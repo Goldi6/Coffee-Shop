@@ -153,6 +153,15 @@ p.guests-invited {
     filter: brightness(75%);
 }
 
+.event-li-output {
+    background-color: var(--clr-blue);
+    color: white !important;
+    border: 1px solid red;
+    border-left: none;
+    font-size: small;
+    width: 15rem;
+}
+
 
 /* .clear-btn-li:hover {
     border: 1px solid white;

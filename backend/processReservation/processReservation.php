@@ -1,12 +1,13 @@
 <?php
+$MIN_DAYS = 4; //minimum today+days to allow reservation
 
 $errors = [];
 $values = [];
 
 // $fields = ['name', 'phone', 'date' , 'hour','minute','guests','email', 'subscription'];
-$fields = ['name', 'phone', 'date', 'hour', 'minute', 'guests', 'subscription', 'email'];
+$fields = ['name', 'phone', 'date', 'hour', 'minute', 'guests', 'subscription', 'email' , 'event' , 'eventId'];
 
-$optionalFields = ['email'];
+$optionalFields = ['email' , 'event', 'eventId'];
 $values = [];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -37,6 +38,23 @@ if (empty($errors)) {
     if (!preg_match("/^[a-zA-z ]*$/", $name)) {
         $errors['name'] = "Only alphabets and whitespace are allowed";
     };
+    $event = $values['event'];
+    if($event){
+        if (!preg_match("/^[a-zA-z ]*$/", $event)) {
+            $event = preg_replace("/[^a-zA-Z0-9]/", "", $event);        };
+    
+    }
+
+    $eventId = $values['eventId'];
+    if($eventId){
+        if (!preg_match("/^[0-9]*$/", $eventId)) {
+            $errors['eventId'] = "Event Id is incorrect!";
+        };
+
+    }
+
+
+
 
 
 
@@ -124,9 +142,9 @@ if (empty($errors)) {
         $got_date = date('Y-m-d', $d);
 
 
-        //check if selected date is  at least in a week
+        //check if selected date is  at least in a MIN_DAYS
 
-        $inAWeek = strtotime("+7 day", time());
+        $inAWeek = strtotime("+" .$MIN_DAYS."day", time());
         $inAWeek = date('Y-m-d', $inAWeek);
 
         //check is selected date is max up to 3 months
@@ -135,7 +153,7 @@ if (empty($errors)) {
         $inThreeMonths = date('Y-m-d', $inThreeMonths);
 
         if ($got_date < $inAWeek) {
-            $errors['date'] = ' You can reserve only for next week';
+            $errors['date'] = ' You can reserve only in '. $MIN_DAYS. ' from now.' . $inAWeek ."sfd".$values['date'];
         } elseif ($got_date > $inThreeMonths) {
             $errors['date'] = 'Reservations are up to 3 months ahead';
         }

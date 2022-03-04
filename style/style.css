@@ -158,6 +158,11 @@ p {
     text-align: center;
 }
 
+button,
+p {
+    font-family: var(--ff-base);
+}
+
 p:first-of-type:first-letter {
     font-size: 3rem;
 }
@@ -174,4 +179,19 @@ p:first-of-type:first-letter {
     .main {
         width: 80vw;
     }
+}
+
+.modal {
+    top: 0;
+    display: none;
+    z-index: 3;
+    /* place-items: center; */
+    justify-items: center;
+    align-items: center;
+    position: fixed;
+    height: 110vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: -3rem;
+    padding-top: 5rem;
 }

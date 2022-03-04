@@ -12,13 +12,11 @@
 }
 
 .events h3 {
-    text-align: center;
     margin: 0;
     border-bottom: 5px double var(--clr-black);
 }
 
 .events h4 {
-    text-align: center;
     margin: 0;
 }
 

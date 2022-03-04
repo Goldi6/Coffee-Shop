@@ -1,4 +1,5 @@
 //#region  events object
+//TODO: generate correct dates to set at any time
 var events = [{
         name: "Music Event",
         date: "1.1.2022",
@@ -6,7 +7,9 @@ var events = [{
         id: "234",
         startTime: "18:00",
         endTime: "21:30",
-        description: "<p>Local band performance, every 1st day of the month.</p>",
+        description: "<p>Local band performance, every 1st of the month.</p>",
+        alt: "Photo by cottonbro from Pexels",
+        coverImage: "./style/events-img/pexels-cottonbro-4088786.jpg",
     },
 
     {
@@ -17,6 +20,7 @@ var events = [{
         startTime: "10:00",
         endTime: "In 7 days",
         description: "<p>Art gallery from *Name*.she is firstly exposing her artwork in our coffee shop.<br> The gallery will last for a week and you may buy, get inspired and just enjoy her gorgeous paintings!  </p>",
+        coverImage: "./style/events-img/pexels-lilartsy-1508109.jpg",
     },
 
     {
@@ -27,13 +31,15 @@ var events = [{
         endTime: "22:00",
         color: "pink",
         id: "145",
-        description: "<p>The celebration of LOVE is coming soon! join us to spend to time with your loved ones and get great valentine special Deals!!</p>",
+        description: "<p>The celebration of LOVE is coming soon! join us to spend some time with your loved ones and get great valentine special Deals!!</p>",
+        coverImage: "./style/events-img/pexels-jill-wellington-3553703.jpg",
+        imgAlt: "Photo by Jill Wellington from Pexels",
     },
 
     {
         name: "Every Sunday",
 
-        date: "after 6pm",
+        date: "Sunday",
 
         id: "623",
         startTime: "18:00",
@@ -46,7 +52,7 @@ var events = [{
 
         date: "24.5.2022",
         id: "5",
-        startTime: "8:00",
+        startTime: "18:00",
         endTime: "00:00",
         description: "<p>Celebration of our Anniversary!</p><p>Special deals for all out Clients! no need to order a Seat!</p>",
     },
@@ -75,6 +81,7 @@ var events = [{
         startTime: "15:00",
         endTime: "23:00",
         date: "7.8.2022",
+        description: " <p>Great Offers! Come and visit!</p>",
         id: "35",
     },
 
@@ -83,6 +90,7 @@ var events = [{
         startTime: "15:00",
         endTime: "17:00",
         date: "3.3.3333",
+        description: "<p>Some description.</p>",
         id: "36",
     },
 
@@ -91,7 +99,7 @@ var events = [{
         startTime: "06:00",
         endTime: "18:00",
         date: "6.6.6666",
-
+        description: "<p>Holidays 1+1 on coffee and breackfast.</p>",
         id: "76",
     },
 ];
@@ -101,7 +109,7 @@ var events = [{
 const $modal = $(".modal");
 
 //elements:
-const $btmToggleArr = $(".big-arrow");
+const $btnToggleArr = $(".big-arrow");
 const $innerList = $("#events-list");
 const $arrow = $(".arrow");
 const $evModalCont = $(".events-modal-content");
@@ -109,6 +117,15 @@ const $evModalCont = $(".events-modal-content");
 ///////////////////////////////////
 
 var number = 0;
+const WEEKDAYS = [
+    "saturday",
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednessday",
+    "thirstday",
+    "friday",
+];
 
 let readyEvents = events.map(function(event, number) {
     let color = "";
@@ -122,16 +139,23 @@ let readyEvents = events.map(function(event, number) {
         $modal.css("display", "grid");
 
         $(".slik-carousel").slick("slickGoTo", number - 1);
-        $innerList.slideUp();
+        $("#events-list").hide();
 
-        $arrow.css("cursor", "default");
-        $btmToggleArr.addClass("closed");
-        open = false;
+        $(".events-wrap").css("opacity", 0).addClass("closed");
+        $(".big-arrow").addClass("closed");
     });
+    let coverImageUrl = "";
+    let alt = "";
+    if ("coverImage" in event) {
+        coverImageUrl = `url(${event.coverImage})`;
+    }
+    if ("imgAlt" in event) {
+        alt = event.imgAlt;
+    }
 
     let content = `<h4 class="event-name ${color}">${event.name}</h4><span class="event-date">${event.date}</span>`;
-    let modal = `  <div class="event-description-slide">
-<div class="slider-content">
+    let modal = `  <div class="event-description-slide" data-id="${events.id}"  style="background-image:${coverImageUrl}">
+<div class="slider-content" >
     <h3 style="color:${color}">${event.name}</h3>
     <!-- <div class="carousel-time-grid"> -->
     <span class="carousel-date dateTime">
@@ -148,14 +172,116 @@ let readyEvents = events.map(function(event, number) {
             </span></p>
     </div>
     <!-- </div> -->
-    <div class="description">
+    <div class="description" >
+        <span style="font-size:small">${alt}</span>
         ${event.description}
     </div>
     <div class="carousel-btn">
-        <button>Reserve for this event!</button>
+        <button onClick ="(function () {
+
+            //NOTE: console.log(MIN_DAYS);
+            let date ='${event.date}';
+            
+            //#region figure out date to set
+            const weekdayIndex = WEEKDAYS.findIndex(element => {
+                return element.toLowerCase() === date.toLowerCase();
+            })
+            //console.log(weekdayIndex);
+    
+            let day, mo, year;
+        if (weekdayIndex > 0) {
+            let today = new Date();
+            let dateOfWeek = getNextDayOfWeek(today, weekdayIndex-1);
+
+            let diff = dateOfWeek.getTime() - today.getTime();
+            diff = diff / (1000 * 3600 * 24);
+            //console.log(diff);
+            
+            if (diff < MIN_DAYS) {
+                dateOfWeek.setDate(dateOfWeek.getDate() + MIN_DAYS);
+                dateOfWeek = getNextDayOfWeek(dateOfWeek, weekdayIndex-1);
+                day = dateOfWeek.getDate().toString();
+                mo = dateOfWeek.getMonth(); mo++;
+                mo = mo.toString();
+                console.log(mo);
+                year = dateOfWeek.getFullYear().toString();
+                
+               // console.log(day);
+
+               // console.log(dateOfWeek);
+            }
+        } else {
+            date = date.split('.');
+             day = date[0],
+                mo = date[1],
+                year = date[2];
+        }
+            
+        // //     let time = '${event.startTime}';
+        // //     time = time.split(':');
+        
+        //     //  if (parseInt(time[0])>12){
+        //     //     for(var i=0; i < hourInp.options.length; i++)
+        //     //     {
+        //     //       if(hourInp.options[i].value === time[0]) {
+        //     //         hourInp.selectedIndex = i;
+        //     //         break;
+        //     //       }
+        //     //     }
+                
+        //     // }
+
+
+
+
+        if(day.length < 2){
+            day = '0' + day;
+        }if(mo.length < 2){
+            mo = '0'+ mo;
+        }
+        
+        date = year+'-'+ mo + '-' + day;
+        //#endregion
+        console.log(date);
+        
+        
+        const dateInp = document.getElementById('date');
+        dateInp.value = date;
+        
+        
+        console.log(dateInp.value);
+        
+        
+        let modal = document.getElementById('events-modal-wrap');
+        modal.style.display = 'none';
+        ////////////////////////////
+        let prettyDate = day + ' ' + mo + ' , ' + year;
+            const legend = document.getElementsByTagName('legend')[0];
+            legend.innerHTML = prettyDate;
+          
+            let form = document.querySelector('.form-content');
+        
+            form.style.display ='grid';
+        
+            const datepicker = document.getElementById('date-picker');
+            datepicker.style.display = 'none';
+        
+
+            
+
+            const eventInp = document.getElementById('event');
+            eventInp.value = '${event.name}';
+            
+            eventIdInp = document.getElementById('eventId');
+            eventIdInp.value = ${event.id};
+
+  
+        })();">Reserve for this event!</button>
     </div>
 </div>
 </div>`;
+    ///////////////////
+
     li.html(content);
     number = number + 1;
     return { li: li, modal: modal };
@@ -174,10 +300,16 @@ lis.join("");
 modals.join("");
 
 $innerList.html(lis);
-//$evModalCont.html(modals);
+$evModalCont.html(modals);
 
 //////////////////////////////////
 
-// $(".close").click(() => {
-// $modal.hide();
-// });
+function getNextDayOfWeek(date, dayOfWeek) {
+    // Code to check that date and dayOfWeek are valid left as an exercise ;)
+
+    var resultDate = new Date(date.getTime());
+
+    resultDate.setDate(date.getDate() + ((7 + dayOfWeek - date.getDay()) % 7));
+
+    return resultDate;
+}

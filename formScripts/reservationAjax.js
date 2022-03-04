@@ -16,6 +16,8 @@ var formData = {
     date: $("#date").val(),
     guests: $("#guests").val(),
     subscription: getUpdated,
+    event: $("#event").val(),
+    eventId: $("#eventId").val(),
 };
 
 $.ajax({
@@ -48,7 +50,9 @@ $.ajax({
                     key == "minute" ||
                     key == "guests" ||
                     key == "subscription" ||
-                    key == "date"
+                    key == "date" ||
+                    key == "event" ||
+                    key == "eventId"
                 ) {
                     //don't multiply err text
                     if (!($(".form-error span").text() == err)) {
@@ -67,12 +71,15 @@ $.ajax({
             let bookedHour = data.hour;
             let bookedMinute = data.minute;
             let bookedGuests = data.guests;
+            let bookedEvent = data.event;
 
             $.getScript("formScripts/showClientReservation.js", () => {
                 ///get the output for the client (Modal box)
                 console.log("loaded storage");
                 outputDate(bookedDate);
                 outputTime(bookedHour, bookedMinute);
+
+                outputEvent(bookedEvent);
                 outputGuests(bookedGuests);
             });
             ///////////////////////////////////////////////////////////////////////////////
@@ -129,7 +136,9 @@ $.ajax({
                                 storageObject.guests,
                                 storageObject.date,
                                 storageObject.hour,
-                                storageObject.minute
+                                storageObject.minute,
+                                storageObject.event,
+                                storageObject.eventId
                             );
                             $(".msg").hide();
                             $(".reserved-nav ul").append(element);

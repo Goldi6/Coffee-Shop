@@ -139,7 +139,7 @@
     /*size*/
     width: 100%;
     padding: 1rem 2rem 0 0;
-    font-family: var(--ff-base);
+    /* font-family: var(--ff-base); */
     font-size: large;
     text-align: right;
     /*position*/

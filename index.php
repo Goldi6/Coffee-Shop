@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style/reserve.css">
     <link rel="stylesheet" href="style/reserved-nav.css">
     <link rel="stylesheet" href="style/reserved-nav-li.css">
+    <link rel="stylesheet" href="style/events-carousel.css">
 
 
 
@@ -31,17 +32,19 @@
 
     <!-- slick carousel -->
     <link rel="stylesheet" type="text/css" href="slick-1.8.1/slick/slick.css" />
-    <!--// Add the new slick-theme.css if you want the default styling -->
     <link rel="stylesheet" type="text/css" href="slick-1.8.1/slick/slick-theme.css" />
     <script type="text/javascript" src="slick-1.8.1/slick/slick.min.js"></script>
     <!--      -->
 
     <script src="script/filterPlugin.js"></script>
+    <script src="script/global.js"></script>
+    <script>
+    const MIN_DAYS = 4;
+    </script>
 </head>
 
-<body>
-    <script src="script/global.js">
 
+<body>
     </script>
     <script src="script/menuItems.js"></script>
     <?php include 'pages/header.php'; ?>
@@ -49,7 +52,7 @@
         <main class="full">
             <?php include 'pages/video.html'; ?>
         </main>
-        <?php include 'pages/footer.php'; ?>
+        <?php include 'pages/footer.html'; ?>
     </div>
 
     <script src="script/loadEvents.js"></script>
