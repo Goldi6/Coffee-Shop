@@ -40,6 +40,21 @@
     <script src="script/global.js"></script>
     <script>
     const MIN_DAYS = 4;
+
+
+    function prepareAndOpenResForm(mo, day, year) {
+        let prettyDate = day + ' ' + mo + ' , ' + year;
+
+        const legend = document.getElementsByTagName('legend')[0];
+        legend.innerHTML = prettyDate;
+
+        let form = document.querySelector('.form-content');
+
+        form.style.display = 'grid';
+
+        const datepicker = document.getElementById('date-picker');
+        datepicker.style.display = 'none';
+    }
     </script>
 </head>
 

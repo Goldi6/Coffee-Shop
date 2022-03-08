@@ -156,128 +156,168 @@ let readyEvents = events.map(function(event, number) {
     let content = `<h4 class="event-name ${color}">${event.name}</h4><span class="event-date">${event.date}</span>`;
     let modal = `  <div class="event-description-slide" data-id="${events.id}"  style="background-image:${coverImageUrl}">
 <div class="slider-content" >
-    <h3 style="color:${color}">${event.name}</h3>
-    <!-- <div class="carousel-time-grid"> -->
-    <span class="carousel-date dateTime">
-    ${event.date}
+<h3 style="color:${color}">${event.name}</h3>
+<!-- <div class="carousel-time-grid"> -->
+<span class="carousel-date dateTime">
+${event.date}
+</span>
+<div class="carousel-time dateTime">
+<p>
+    Start: <span class="start-time">
+        ${event.startTime}
     </span>
-    <div class="carousel-time dateTime">
-        <p>
-            Start: <span class="start-time">
-                ${event.startTime}
-            </span>
-        </p>
-        <p>End: <span class="end-time">
-                ${event.endTime}
-            </span></p>
-    </div>
-    <!-- </div> -->
-    <div class="description" >
-        <span style="font-size:small">${alt}</span>
-        ${event.description}
-    </div>
-    <div class="carousel-btn">
-        <button onClick ="(function () {
+</p>
+<p>End: <span class="end-time">
+        ${event.endTime}
+    </span></p>
+</div>
+<!-- </div> -->
+<div class="description" >
+<span style="font-size:small">${alt}</span>
+${event.description}
+</div>
+<div class="carousel-btn">
+<button onClick ="(function () {
+    //NOTE: needs to be on reservation page to access the form in the DOM
 
-            //NOTE: console.log(MIN_DAYS);
-            let date ='${event.date}';
-            
-            //#region figure out date to set
-            const weekdayIndex = WEEKDAYS.findIndex(element => {
-                return element.toLowerCase() === date.toLowerCase();
-            })
-            //console.log(weekdayIndex);
+    let promise = new Promise((resolve,reject)=>{
+       
+        let navBtn = document.getElementById('reserve-btn');
+        if(!navBtn.classList.contains('active')){
+
+            navBtn.click();
+        }
+
+        setTimeout(() => {   let dt = document.getElementById('date');
+        if(dt !== null){
+            resolve('success');
+        }else{
+            reject('failed to load DOM Content');
+        }}, 500);
+     
+    });
     
-            let day, mo, year;
-        if (weekdayIndex > 0) {
-            let today = new Date();
-            let dateOfWeek = getNextDayOfWeek(today, weekdayIndex-1);
+    promise.then(result=>{
+        console.log(result);
 
-            let diff = dateOfWeek.getTime() - today.getTime();
-            diff = diff / (1000 * 3600 * 24);
-            //console.log(diff);
-            
-            if (diff < MIN_DAYS) {
-                dateOfWeek.setDate(dateOfWeek.getDate() + MIN_DAYS);
-                dateOfWeek = getNextDayOfWeek(dateOfWeek, weekdayIndex-1);
-                day = dateOfWeek.getDate().toString();
-                mo = dateOfWeek.getMonth(); mo++;
-                mo = mo.toString();
-                console.log(mo);
-                year = dateOfWeek.getFullYear().toString();
-                
-               // console.log(day);
-
-               // console.log(dateOfWeek);
-            }
-        } else {
-            date = date.split('.');
-             day = date[0],
-                mo = date[1],
-                year = date[2];
-        }
-            
-        // //     let time = '${event.startTime}';
-        // //     time = time.split(':');
-        
-        //     //  if (parseInt(time[0])>12){
-        //     //     for(var i=0; i < hourInp.options.length; i++)
-        //     //     {
-        //     //       if(hourInp.options[i].value === time[0]) {
-        //     //         hourInp.selectedIndex = i;
-        //     //         break;
-        //     //       }
-        //     //     }
-                
-        //     // }
-
-
-
-
-        if(day.length < 2){
-            day = '0' + day;
-        }if(mo.length < 2){
-            mo = '0'+ mo;
-        }
-        
-        date = year+'-'+ mo + '-' + day;
-        //#endregion
-        console.log(date);
-        
-        
-        const dateInp = document.getElementById('date');
+        //set date hidden Input
+        let dateInp = document.getElementById('date');
+        //console.log(dateInp);
         dateInp.value = date;
-        
-        
-        console.log(dateInp.value);
-        
-        
+
+        //hide modal
         let modal = document.getElementById('events-modal-wrap');
         modal.style.display = 'none';
         ////////////////////////////
-        let prettyDate = day + ' ' + mo + ' , ' + year;
-            const legend = document.getElementsByTagName('legend')[0];
-            legend.innerHTML = prettyDate;
-          
-            let form = document.querySelector('.form-content');
         
-            form.style.display ='grid';
+        //?set name and id to display on the resy reservation block
+        const eventInp = document.getElementById('event');
+        eventInp.value = '${event.name}';
         
-            const datepicker = document.getElementById('date-picker');
-            datepicker.style.display = 'none';
+        eventIdInp = document.getElementById('eventId');
+        eventIdInp.value = ${event.id};
+
         
+        //?get date from input, hide calendar open form
+        prepareAndOpenResForm(mo, day, year);
+    });
 
-            
+    promise.catch(error=>{
+        console.log(error);
+    })
+   
+    //NOTE: console.log(MIN_DAYS);
 
-            const eventInp = document.getElementById('event');
-            eventInp.value = '${event.name}';
-            
-            eventIdInp = document.getElementById('eventId');
-            eventIdInp.value = ${event.id};
+    
+    let date ='${event.date}';
+    
+    //#region figure out date to set
+    const weekdayIndex = WEEKDAYS.findIndex(element => {
+        return element.toLowerCase() === date.toLowerCase();
+    })
+    //console.log(weekdayIndex);
 
-  
-        })();">Reserve for this event!</button>
-    </div>
+    let day, mo, year;
+if (weekdayIndex > 0) {
+    let today = new Date();
+    let dateOfWeek = getNextDayOfWeek(today, weekdayIndex-1);
+
+    let diff = dateOfWeek.getTime() - today.getTime();
+    diff = diff / (1000 * 3600 * 24);
+    //console.log(diff);
+    
+    if (diff < MIN_DAYS) {
+        dateOfWeek.setDate(dateOfWeek.getDate() + MIN_DAYS);
+        dateOfWeek = getNextDayOfWeek(dateOfWeek, weekdayIndex-1);
+        day = dateOfWeek.getDate().toString();
+        mo = dateOfWeek.getMonth(); mo++;
+        mo = mo.toString();
+        console.log(mo);
+        year = dateOfWeek.getFullYear().toString();
+        
+       // console.log(day);
+
+       // console.log(dateOfWeek);
+    }
+} else {
+    date = date.split('.');
+     day = date[0],
+        mo = date[1],
+        year = date[2];
+}
+    
+// //     let time = '${event.startTime}';
+// //     time = time.split(':');
+
+//     //  if (parseInt(time[0])>12){
+//     //     for(var i=0; i < hourInp.options.length; i++)
+//     //     {
+//     //       if(hourInp.options[i].value === time[0]) {
+//     //         hourInp.selectedIndex = i;
+//     //         break;
+//     //       }
+//     //     }
+        
+//     // }
+
+
+
+
+if(day.length < 2){
+    day = '0' + day;
+}if(mo.length < 2){
+    mo = '0'+ mo;
+}
+
+date = year+'-'+ mo + '-' + day;
+//#endregion
+
+
+//console.log(date);
+
+
+
+
+
+
+    //console.log(dateInp.value);
+    
+    
+   
+
+
+
+
+
+
+
+    
+
+
+
+
+})();">Reserve for this event!</button>
+</div>
 </div>
 </div>`;
     ///////////////////

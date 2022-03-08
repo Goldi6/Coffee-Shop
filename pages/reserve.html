@@ -468,17 +468,11 @@
 
 
 
-            let prettyDate = day + " " + mo + " , " + year;
+            //LINK: located in header script
+            prepareAndOpenResForm(mo, day, year)
 
 
-            //put date in legend
-            $('legend').html(prettyDate);
 
-            //show modal
-            $('.form-content').show().css('display', 'grid');
-
-            //hide datepicker
-            $("#date-picker").hide();
 
         })
 
