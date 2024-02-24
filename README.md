@@ -1,9 +1,8 @@
 # Coffee Shop Website
 
-This web project is made for practice and as part of my portfolio.
+This web project is made for practice as part of my self learning path.
 It uses Jquery , php and mysql.
 
-_This coffee shop is not an existing business just for your notice._
 
 To check out this project you may need a local server like XAMPP or WAMP , jquery is included within the project.
 
